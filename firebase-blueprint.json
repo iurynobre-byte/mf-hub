@@ -1,0 +1,147 @@
+{
+  "entities": {
+    "Board": {
+      "title": "Board",
+      "description": "Workspace / Kanban board",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "isDefault": { "type": "boolean" },
+        "columns": { "type": "array" }
+      },
+      "required": ["id", "title"]
+    },
+    "Card": {
+      "title": "Card",
+      "description": "Kanban Card Task",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "columnId": { "type": "string" },
+        "boardId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "priority": { "type": "string" },
+        "tags": { "type": "array" },
+        "assigneeIds": { "type": "array" },
+        "checklist": { "type": "array" },
+        "comments": { "type": "array" },
+        "attachments": { "type": "array" },
+        "coverImage": { "type": "string" },
+        "coverImageName": { "type": "string" },
+        "order": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "columnId", "boardId", "title"]
+    },
+    "User": {
+      "title": "User",
+      "description": "Registered User Profile",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string" },
+        "avatar": { "type": "string" },
+        "department": { "type": "string" },
+        "lastLogin": { "type": "string" },
+        "filterPreferences": { "type": "object" }
+      },
+      "required": ["id", "name", "email", "role"]
+    },
+    "Department": {
+      "title": "Department",
+      "description": "Company Department and Sectors",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name"]
+    },
+    "Tag": {
+      "title": "Tag",
+      "description": "Card Label Tag",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "color": { "type": "string" }
+      },
+      "required": ["id", "label", "color"]
+    },
+    "PermissionLevel": {
+      "title": "PermissionLevel",
+      "description": "Role-based Access Control Level",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "code": { "type": "string" }
+      },
+      "required": ["id", "name", "code"]
+    },
+    "Automation": {
+      "title": "Automation",
+      "description": "Card Automation Routine",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "enabled": { "type": "boolean" }
+      },
+      "required": ["id", "name"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Security and Action Audit Trail",
+      "type": "object",
+      "properties": {
+        "action": { "type": "string" },
+        "performedBy": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["action", "performedBy"]
+    }
+  },
+  "firestore": {
+    "/boards/{boardId}": {
+      "schema": "Board",
+      "description": "Workspace boards and columns"
+    },
+    "/cards/{cardId}": {
+      "schema": "Card",
+      "description": "Kanban cards with tasks and details"
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles and permissions"
+    },
+    "/departments/{departmentId}": {
+      "schema": "Department",
+      "description": "Departments and sectors"
+    },
+    "/tags/{tagId}": {
+      "schema": "Tag",
+      "description": "Tags for categorizing cards"
+    },
+    "/permissionLevels/{levelId}": {
+      "schema": "PermissionLevel",
+      "description": "Custom and system permission levels"
+    },
+    "/automations/{automationId}": {
+      "schema": "Automation",
+      "description": "Routine rules for automatic card generation"
+    },
+    "/auditLogs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Immutable log entries of system activities"
+    }
+  }
+}

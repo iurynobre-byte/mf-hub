@@ -1,0 +1,75 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128;
+    }
+
+    // Connection verification document
+    match /_connection_test/{docId} {
+      allow read, write: if true;
+    }
+
+    // Boards & Columns
+    match /boards/{boardId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && isValidId(boardId);
+      allow delete: if isSignedIn();
+    }
+
+    // Kanban Cards
+    match /cards/{cardId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && isValidId(cardId);
+      allow delete: if isSignedIn();
+    }
+
+    // User Profiles
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && isValidId(userId);
+      allow delete: if isSignedIn();
+    }
+
+    // Departments and Sectors
+    match /departments/{departmentId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && isValidId(departmentId);
+      allow delete: if isSignedIn();
+    }
+
+    // Tags
+    match /tags/{tagId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && isValidId(tagId);
+      allow delete: if isSignedIn();
+    }
+
+    // Permission Levels
+    match /permissionLevels/{levelId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && isValidId(levelId);
+      allow delete: if isSignedIn();
+    }
+
+    // Automations
+    match /automations/{automationId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && isValidId(automationId);
+      allow delete: if isSignedIn();
+    }
+
+    // Audit Logs
+    match /auditLogs/{logId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn();
+      allow delete: if false;
+    }
+  }
+}
